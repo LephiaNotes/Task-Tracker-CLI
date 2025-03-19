@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Buy Groceries",
+        "status": "not done",
+        "created at": "2025-03-19 15:49:38",
+        "updated at": "2025-03-19 15:49:38"
+    },
+    {
+        "id": 2,
+        "title": "Buy whatever",
+        "status": "not done",
+        "created at": "2025-03-19 15:50:01",
+        "updated at": "2025-03-19 15:50:01"
+    },
+    {
+        "id": 3,
+        "title": "Kill myself",
+        "status": "not done",
+        "created at": "2025-03-19 15:50:25",
+        "updated at": "2025-03-19 15:50:25"
+    }
+]
