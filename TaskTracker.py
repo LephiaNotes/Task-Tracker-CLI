@@ -1,12 +1,11 @@
+#!/usr/bin/env python3
+
 import json
 import os
 import argparse
 from datetime import datetime
-from rich.console import Console
-from rich.table import Table
-from rich.prompt import Prompt
 
-console = Console()
+
 
 task_file = 'tasklist.json'
 
@@ -46,7 +45,7 @@ def add_task(title, status = 'not done'):
     }
     tasks.append(task)
     save_tasks(tasks)
-    console.print(f'Task added successfully (ID: {task_id})')
+    print(f'Task added successfully (ID: {task_id})')
 
 def update_tasks(task_id, title = None, status = None):
     tasks = load_tasks()
@@ -58,9 +57,9 @@ def update_tasks(task_id, title = None, status = None):
                 task['status'] = status
             task ['updated at'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             save_tasks(tasks)
-            console.print(f" Task ID {task_id} updated.")
+            print(f" Task ID {task_id} updated.")
             return
-    console.print(f'Task ID {task_id} not found.')
+    print(f'Task ID {task_id} not found.')
 
 def mark_progress(task_id):
     update_tasks(task_id, status = 'In Progress')
@@ -72,7 +71,7 @@ def delete_task(task_id):
     tasks = load_tasks()
     tasks = [task for task in tasks if task['id'] != task_id]
     save_tasks(tasks)
-    console.print(f'Task ID {task_id} deleted.')
+    print(f'Task ID {task_id} deleted.')
 
 def list_tasks(status = None):
     # List the tasks with a specific status
@@ -80,26 +79,16 @@ def list_tasks(status = None):
     if status:
         tasks = [task for task in tasks if task['status'] == status]
     if not tasks:
-        console.print("[red]No tasks found.[/red]") 
+        print("No tasks found.") 
         return
     
+    # Print table header
+    print(f"{'ID':<5} {'Title':<20} {'Status':<15} {'Created At':<20} {'Updated At':<20}")
+    print("-" * 85)
 
-    table = Table(show_header = True, header_style = 'bold magenta')
-    table.add_column('ID', style = 'dim', width = 5)
-    table.add_column('Title', style = 'dim', width = 20)
-    table.add_column('Status', style = 'dim', width = 15)
-    table.add_column('Created At', style = 'dim', width = 20)
-    table.add_column('Updated At', style = 'dim', width = 20)
-    
-    table.add_row(
-        str(tasks['id']),
-        tasks['title'],
-        tasks['status'],
-        tasks['created at'],
-        tasks['updated at']
-    )
-
-    console.print(table)
+    # Print each task
+    for task in tasks:
+        print(f"{task['id']:<5} {task['title']:<20} {task['status']:<15} {task['created at']:<20} {task['updated at']:<20}")
 
 def main():
     parser = argparse.ArgumentParser(description = 'Task Tracker CLI')
@@ -127,8 +116,7 @@ def main():
 
     args = parser.parse_args()
 
-    console.print('Task Tracker CLI', style = 'bold violet')
-    console.print(
+    print(
         "CLI-based task tracker developed using Python and Rich library."
     )
 
